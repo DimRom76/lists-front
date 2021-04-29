@@ -3,39 +3,39 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Paper } from '@material-ui/core';
 
-import ContactList from '../Components/ContactList';
-import ContactForm from '../Components/ContactForm';
+import Lists from '../Components/Lists';
+import ListsForm from '../Components/ListForm';
 import Mainbar from '../Components/Mainbar';
 import Modal from '../Components/Modal';
 
-import { contactsOperation, contactsSelectors } from '../redux/contacts';
+import { listsOperation, listsSelectors } from '../redux/lists';
 
-function ContactsView() {
-  const isContactsLoading = useSelector(contactsSelectors.getLoading);
+function ListsView() {
+  const isListsLoading = useSelector(listsSelectors.getLoading);
   const dispatch = useDispatch();
 
   const [showModal, setshowModal] = useState(false);
-  const [editContact, setEditContact] = useState({});
+  const [editList, setEditList] = useState({});
 
   useEffect(() => {
-    const fetchContacts = () => dispatch(contactsOperation.fetchContacts());
+    const fetchLists = () => dispatch(listsOperation.fetchLists());
 
-    fetchContacts();
+    fetchLists();
   }, [dispatch]);
 
   const toggleModal = () => {
     setshowModal(!showModal);
-    setEditContact({});
+    setEditList({});
   };
 
-  const currentEditContact = editContact => {
+  const currentEditList = editList => {
     setshowModal(!showModal);
-    setEditContact(editContact);
+    setEditList(editList);
   };
 
   return (
     <div className="container">
-      {isContactsLoading && (
+      {isListsLoading && (
         <Modal>
           <h1>Обработка данных...</h1>
         </Modal>
@@ -44,18 +44,18 @@ function ContactsView() {
       <Paper className="paper">
         <Mainbar onClick={toggleModal} />
 
-        <h2>Phonebook</h2>
+        <h2>Lists</h2>
 
-        <ContactList onEditContact={currentEditContact} />
+        <Lists onEditList={currentEditList} />
       </Paper>
 
       {showModal && (
         <Modal onClose={toggleModal}>
-          <ContactForm onSave={toggleModal} editContact={editContact} />
+          <ListsForm onSave={toggleModal} editList={editList} />
         </Modal>
       )}
     </div>
   );
 }
 
-export default ContactsView;
+export default ListsView;

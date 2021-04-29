@@ -4,35 +4,34 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import PropTypes from 'prop-types';
 
-import { contactsOperation, contactsSelectors } from '../../redux/contacts';
+import { listsOperation, listsSelectors } from '../../redux/lists';
 
-import s from './ContactList.module.css';
+import s from './Lists.module.css';
 
-function ContactList({ onEditContact }) {
-  const contacts = useSelector(contactsSelectors.getVisibleContacts);
+function Lists({ onEditList }) {
+  const lists = useSelector(listsSelectors.getVisibleLists);
   const dispatch = useDispatch();
 
-  const onDeleteContact = id => dispatch(contactsOperation.deleteContact(id));
+  const onDeleteList = id => dispatch(listsOperation.deleteList(id));
 
   return (
     <ul className={s.older}>
-      {contacts.map(({ id, name, number }) => {
+      {lists.map(({ id, name, number }) => {
         return (
           <li key={id}>
-            <div className="contact_container">
-              <p>Имя: {name}</p>
-              <p>Номер: {number}</p>
+            <div className="list_container">
+              <p>{name}</p>
             </div>
             <div className={s.buttom_group}>
               <button
                 className={s.button_list}
-                onClick={() => onEditContact({ idContact: id, name, number })}
+                onClick={() => onEditList({ idList: id, name, number })}
               >
                 <EditIcon />
               </button>
               <button
                 className={s.button_list}
-                onClick={() => onDeleteContact(id)}
+                onClick={() => onDeleteList(id)}
               >
                 <DeleteIcon />
               </button>
@@ -44,8 +43,8 @@ function ContactList({ onEditContact }) {
   );
 }
 
-ContactList.propTypes = {
-  onEditContact: PropTypes.func.isRequired,
+Lists.propTypes = {
+  onEditList: PropTypes.func.isRequired,
 };
 
-export default ContactList;
+export default Lists;

@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import s from './ContactForm.module.css';
+import s from './ListForm.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -15,23 +15,22 @@ import InputMask from 'react-input-mask';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { contactsOperation, contactsSelectors } from '../../redux/contacts';
+import { listsOperation, listsSelectors } from '../../redux/lists';
 
-function ContactForm({ onSave, editContact }) {
-  const contacts = useSelector(contactsSelectors.getAllContacts);
+function ListForm({ onSave, editList }) {
+  const lists = useSelector(listsSelectors.getAlllists);
   const dispatch = useDispatch();
 
-  const onSubmitNew = value => dispatch(contactsOperation.addContact(value));
-  const onChangeContact = value =>
-    dispatch(contactsOperation.editContact(value));
+  const onSubmitNew = value => dispatch(listsOperation.addList(value));
+  const onChangeList = value => dispatch(listsOperation.editList(value));
 
   function onSubmitForm(values, setSubmitting, resetForm) {
     setSubmitting(false);
-    const findEl = contacts.find(
+    const findEl = lists.find(
       ({ name, number, id }) =>
         (name.toLowerCase() === values.name.toLowerCase() ||
           number === values.number) &&
-        id !== idContact,
+        id !== idList,
     );
     if (findEl) {
       toast.warn(
@@ -40,9 +39,7 @@ function ContactForm({ onSave, editContact }) {
       return;
     }
 
-    idContact
-      ? onChangeContact({ ...values, id: idContact })
-      : onSubmitNew(values);
+    idList ? onChangeList({ ...values, id: idList }) : onSubmitNew(values);
 
     onSave();
     resetForm();
@@ -56,8 +53,8 @@ function ContactForm({ onSave, editContact }) {
     number: Yup.string().length(19, 'Wrong length!').required('Requerid'),
   });
 
-  let { idContact, name, number } = editContact;
-  if (!idContact) {
+  let { idList, name, number } = editList;
+  if (!idList) {
     name = '';
     number = '';
   }
@@ -144,14 +141,14 @@ function ContactForm({ onSave, editContact }) {
         style={{ marginTop: 10 }}
         type="submit"
       >
-        {idContact ? 'Редактировать' : 'Новый контакт'}
+        {idList ? 'Редактировать' : 'Новый контакт'}
       </Button>
     </form>
   );
 }
 
-ContactForm.propTypes = {
+ListForm.propTypes = {
   onSave: PropTypes.func.isRequired,
 };
 
-export default ContactForm;
+export default ListForm;
