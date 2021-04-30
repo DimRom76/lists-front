@@ -7,7 +7,6 @@ import s from './Navigation.module.css';
 function Logout() {
   const name = useSelector(authSelectors.getUsername);
   const avatar = useSelector(authSelectors.getAvatar);
-  console.log(avatar);
 
   const dispatch = useDispatch();
 

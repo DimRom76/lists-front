@@ -13,6 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { listsReducer } from './lists';
+import { itemsReducer } from './items';
 import { authReducer } from './auth';
 
 const middleware = [
@@ -33,6 +34,7 @@ const authPersistConfig = {
 const store = configureStore({
   reducer: {
     lists: listsReducer,
+    items: itemsReducer,
     auth: persistReducer(authPersistConfig, authReducer),
   },
   middleware,

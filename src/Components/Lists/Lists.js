@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
+
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 import PropTypes from 'prop-types';
 
@@ -13,25 +15,49 @@ function Lists({ onEditList }) {
   const dispatch = useDispatch();
 
   const onDeleteList = id => dispatch(listsOperation.deleteList(id));
+  const onDeleteItemList = (idList, idItem) =>
+    dispatch(listsOperation.deleteItemList({ idList, idItem }));
 
   return (
     <ul className={s.older}>
-      {lists.map(({ id, name, number }) => {
+      {lists.map(({ _id, name, number, items }) => {
         return (
-          <li key={id}>
+          <li key={_id} className={s.liList}>
             <div className="list_container">
               <p>{name}</p>
+              <ul>
+                {items.map(el => {
+                  return (
+                    <li key={el.item._id}>
+                      <p className={s.item_text}>{el.item.name}</p>
+                      <button
+                        className={s.button_list}
+                        onClick={() => onDeleteItemList(_id, el.item._id)}
+                      >
+                        <DeleteIcon style={{ fontSize: 14 }} />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
             <div className={s.buttom_group}>
               <button
                 className={s.button_list}
-                onClick={() => onEditList({ idList: id, name, number })}
+                //TODO
+                onClick={() => onEditList({ idList: _id, name, number })}
+              >
+                <AddIcon />
+              </button>
+              <button
+                className={s.button_list}
+                onClick={() => onEditList({ idList: _id, name, number })}
               >
                 <EditIcon />
               </button>
               <button
                 className={s.button_list}
-                onClick={() => onDeleteList(id)}
+                onClick={() => onDeleteList(_id)}
               >
                 <DeleteIcon />
               </button>

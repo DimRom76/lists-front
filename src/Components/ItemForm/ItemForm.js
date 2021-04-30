@@ -2,25 +2,25 @@ import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import s from './ListForm.module.css';
+import s from './ItemForm.module.css';
 import { useDispatch } from 'react-redux';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import { Button, TextField } from '@material-ui/core';
 
-import { listsOperation } from '../../redux/lists';
+import { itemsOperation } from '../../redux/items';
 
-function ListForm({ onSave, editList }) {
+function ItemForm({ onSave, editItem }) {
   const dispatch = useDispatch();
 
-  const onSubmitNew = value => dispatch(listsOperation.addList(value));
-  const onChangeList = value => dispatch(listsOperation.editList(value));
+  const onSubmitNew = value => dispatch(itemsOperation.addItem(value));
+  const onChangeItem = value => dispatch(itemsOperation.editItem(value));
 
   function onSubmitForm(values, setSubmitting, resetForm) {
     setSubmitting(false);
 
-    idList ? onChangeList({ ...values, id: idList }) : onSubmitNew(values);
+    idItem ? onChangeItem({ ...values, id: idItem }) : onSubmitNew(values);
 
     onSave();
     resetForm();
@@ -33,8 +33,8 @@ function ListForm({ onSave, editList }) {
       .required('Requerid'),
   });
 
-  let { idList, name } = editList;
-  if (!idList) {
+  let { idItem, name } = editItem;
+  if (!idItem) {
     name = '';
   }
 
@@ -86,14 +86,14 @@ function ListForm({ onSave, editList }) {
         style={{ marginTop: 10 }}
         type="submit"
       >
-        {idList ? 'Редактировать' : 'Новый список'}
+        {idItem ? 'Редактировать' : 'Новый элемент'}
       </Button>
     </form>
   );
 }
 
-ListForm.propTypes = {
+ItemForm.propTypes = {
   onSave: PropTypes.func.isRequired,
 };
 
-export default ListForm;
+export default ItemForm;

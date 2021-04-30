@@ -16,4 +16,12 @@ export const deleteListRequest = createAction('Lists/deleteListRequest');
 export const deleteListsSuccess = createAction('Lists/deleteListsSuccess');
 export const deleteListError = createAction('Lists/deleteListError');
 
+export const deleteItemListRequest = createAction(
+  'Lists/deleteItemListRequest',
+);
+export const deleteItemListsSuccess = createAction(
+  'Lists/deleteItemListsSuccess',
+);
+export const deleteItemListError = createAction('Lists/deleteItemListError');
+
 export const changeFilter = createAction('Lists/changeFilter');

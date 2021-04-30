@@ -5,13 +5,31 @@ import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { listsSelectors, changeFilter } from '../../redux/lists';
+import { changeItemFilter, itemsSelectors } from '../../redux/items';
 
 //import s from './filter.module.css';
 
-function Filter() {
-  const value = useSelector(listsSelectors.getFilter);
-
+function Filter({ element }) {
   const dispatch = useDispatch();
+
+  let selector;
+  if (element === 'list') {
+    selector = listsSelectors.getFilter;
+  } else {
+    selector = itemsSelectors.getFilter;
+  }
+
+  const value = useSelector(selector);
+
+  const onChange = e => {
+    let change;
+    if (element === 'list') {
+      change = changeFilter(e.target.value);
+    } else {
+      change = changeItemFilter(e.target.value);
+    }
+    dispatch(change);
+  };
 
   return (
     <TextField
@@ -19,7 +37,7 @@ function Filter() {
       type="text"
       label="Поиск по имени"
       value={value}
-      onChange={e => dispatch(changeFilter(e.target.value))}
+      onChange={onChange}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

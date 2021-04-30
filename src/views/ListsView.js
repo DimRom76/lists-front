@@ -42,7 +42,7 @@ function ListsView() {
       )}
 
       <Paper className="paper">
-        <Mainbar onClick={toggleModal} />
+        <Mainbar onClick={toggleModal} element="list" />
 
         <h2>Lists</h2>
 

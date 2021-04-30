@@ -13,16 +13,21 @@ import {
   deleteListRequest,
   deleteListsSuccess,
   deleteListError,
+  deleteItemListRequest,
+  deleteItemListsSuccess,
+  deleteItemListError,
   changeFilter,
 } from './lists-actions';
 
 const lists = createReducer([], {
-  [fetchListsSuccess]: (_, { payload }) => payload,
+  [fetchListsSuccess]: (_, { payload }) => payload.lists,
   [addListsSuccess]: (state, { payload }) => [...state, payload],
   [deleteListsSuccess]: (state, { payload }) =>
-    state.filter(List => List.id !== payload),
+    state.filter(list => list._id !== payload),
+  [deleteItemListsSuccess]: (state, { payload }) =>
+    state.map(list => (list._id === payload._id ? payload : list)),
   [editListsSuccess]: (state, { payload }) =>
-    state.map(todo => (todo.id === payload.id ? payload : todo)),
+    state.map(list => (list._id === payload._id ? payload : list)),
 });
 
 const filter = createReducer('', {
@@ -42,6 +47,9 @@ const loading = createReducer(false, {
   [deleteListRequest]: () => true,
   [deleteListsSuccess]: () => false,
   [deleteListError]: () => false,
+  [deleteItemListRequest]: () => true,
+  [deleteItemListsSuccess]: () => false,
+  [deleteItemListError]: () => false,
 });
 
 const error = createReducer(null, {});
