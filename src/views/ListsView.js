@@ -5,6 +5,7 @@ import { Paper } from '@material-ui/core';
 
 import Lists from '../Components/Lists';
 import ListsForm from '../Components/ListForm';
+import AddItemForm from '../Components/AddItemForm';
 import Mainbar from '../Components/Mainbar';
 import Modal from '../Components/Modal';
 
@@ -14,7 +15,8 @@ function ListsView() {
   const isListsLoading = useSelector(listsSelectors.getLoading);
   const dispatch = useDispatch();
 
-  const [showModal, setshowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [editList, setEditList] = useState({});
 
   useEffect(() => {
@@ -24,12 +26,22 @@ function ListsView() {
   }, [dispatch]);
 
   const toggleModal = () => {
-    setshowModal(!showModal);
+    setShowModal(!showModal);
     setEditList({});
   };
 
   const currentEditList = editList => {
-    setshowModal(!showModal);
+    setShowModal(!showModal);
+    setEditList(editList);
+  };
+
+  const toggleAddItemModal = () => {
+    setShowAddItemModal(!showAddItemModal);
+    setEditList({});
+  };
+
+  const addItemToList = editList => {
+    setShowAddItemModal(!showAddItemModal);
     setEditList(editList);
   };
 
@@ -46,12 +58,18 @@ function ListsView() {
 
         <h2>Lists</h2>
 
-        <Lists onEditList={currentEditList} />
+        <Lists onEditList={currentEditList} onAddItem={addItemToList} />
       </Paper>
 
       {showModal && (
         <Modal onClose={toggleModal}>
           <ListsForm onSave={toggleModal} editList={editList} />
+        </Modal>
+      )}
+
+      {showAddItemModal && (
+        <Modal onClose={toggleAddItemModal}>
+          <AddItemForm onSave={toggleAddItemModal} editList={editList} />
         </Modal>
       )}
     </div>

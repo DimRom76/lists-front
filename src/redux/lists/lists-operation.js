@@ -12,6 +12,9 @@ import {
   deleteListRequest,
   deleteListsSuccess,
   deleteListError,
+  addItemListRequest,
+  addItemListsSuccess,
+  addItemListError,
   deleteItemListRequest,
   deleteItemListsSuccess,
   deleteItemListError,
@@ -66,11 +69,26 @@ const deleteItemList = ({ idList, idItem }) => dispatch => {
     .catch(error => dispatch(deleteItemListError(error)));
 };
 
+const addItemList = ({ idList, idItem }) => dispatch => {
+  dispatch(addItemListRequest());
+  const body = {
+    item: idItem,
+  };
+  console.log(idList);
+  console.log(body);
+
+  axios
+    .patch(`/lists/${idList}/addItem`, body)
+    .then(data => dispatch(addItemListsSuccess(data.data.list)))
+    .catch(error => dispatch(addItemListError(error)));
+};
+
 const operationLists = {
   fetchLists,
   addList,
   deleteList,
   deleteItemList,
+  addItemList,
   editList,
 };
 

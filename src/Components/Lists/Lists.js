@@ -10,7 +10,7 @@ import { listsOperation, listsSelectors } from '../../redux/lists';
 
 import s from './Lists.module.css';
 
-function Lists({ onEditList }) {
+function Lists({ onEditList, onAddItem }) {
   const lists = useSelector(listsSelectors.getVisibleLists);
   const dispatch = useDispatch();
 
@@ -44,8 +44,7 @@ function Lists({ onEditList }) {
             <div className={s.buttom_group}>
               <button
                 className={s.button_list}
-                //TODO
-                onClick={() => onEditList({ idList: _id, name, number })}
+                onClick={() => onAddItem({ idList: _id })}
               >
                 <AddIcon />
               </button>

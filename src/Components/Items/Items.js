@@ -12,7 +12,6 @@ import s from './Items.module.css';
 function Items({ onEditItem }) {
   const items = useSelector(itemsSelectors.getVisibleItems);
   const dispatch = useDispatch();
-
   const onDeleteItem = id => dispatch(itemsOperation.deleteItem(id));
 
   return (

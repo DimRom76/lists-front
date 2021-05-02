@@ -29,7 +29,7 @@ function ListForm({ onSave, editList }) {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, 'Too Short!')
-      .max(25, 'Too Long!')
+      .max(100, 'Too Long!')
       .required('Requerid'),
   });
 

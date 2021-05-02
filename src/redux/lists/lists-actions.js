@@ -16,6 +16,10 @@ export const deleteListRequest = createAction('Lists/deleteListRequest');
 export const deleteListsSuccess = createAction('Lists/deleteListsSuccess');
 export const deleteListError = createAction('Lists/deleteListError');
 
+export const addItemListRequest = createAction('Lists/addItemListRequest');
+export const addItemListsSuccess = createAction('Lists/addItemListsSuccess');
+export const addItemListError = createAction('Lists/addItemListError');
+
 export const deleteItemListRequest = createAction(
   'Lists/deleteItemListRequest',
 );

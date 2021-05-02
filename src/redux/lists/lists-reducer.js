@@ -13,6 +13,9 @@ import {
   deleteListRequest,
   deleteListsSuccess,
   deleteListError,
+  addItemListRequest,
+  addItemListsSuccess,
+  addItemListError,
   deleteItemListRequest,
   deleteItemListsSuccess,
   deleteItemListError,
@@ -24,6 +27,8 @@ const lists = createReducer([], {
   [addListsSuccess]: (state, { payload }) => [...state, payload],
   [deleteListsSuccess]: (state, { payload }) =>
     state.filter(list => list._id !== payload),
+  [addItemListsSuccess]: (state, { payload }) =>
+    state.map(list => (list._id === payload._id ? payload : list)),
   [deleteItemListsSuccess]: (state, { payload }) =>
     state.map(list => (list._id === payload._id ? payload : list)),
   [editListsSuccess]: (state, { payload }) =>
@@ -47,6 +52,9 @@ const loading = createReducer(false, {
   [deleteListRequest]: () => true,
   [deleteListsSuccess]: () => false,
   [deleteListError]: () => false,
+  [addItemListRequest]: () => true,
+  [addItemListsSuccess]: () => false,
+  [addItemListError]: () => false,
   [deleteItemListRequest]: () => true,
   [deleteItemListsSuccess]: () => false,
   [deleteItemListError]: () => false,

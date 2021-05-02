@@ -14,6 +14,8 @@ import {
   deleteItemError,
 } from './items-actions';
 
+import { listsOperation } from '../lists';
+
 const fetchItems = () => dispatch => {
   dispatch(fetchItemsRequest());
 
@@ -23,11 +25,23 @@ const fetchItems = () => dispatch => {
     .catch(error => dispatch(fetchItemsError(error)));
 };
 
-const addItem = values => dispatch => {
+const addItem = (values, idList = null) => dispatch => {
+  console.log(dispatch);
   dispatch(addItemRequest());
   axios
     .post('/items', values)
-    .then(({ data }) => dispatch(addItemsSuccess(data.item)))
+    .then(({ data }) => {
+      dispatch(addItemsSuccess(data.item));
+      return data.item._id;
+    })
+    .then(idItem => {
+      console.log(idItem);
+      console.log(idList);
+
+      if (idList) {
+        dispatch(listsOperation.addItemList({ idList, idItem }));
+      }
+    })
     .catch(error => dispatch(addItemError(error)));
 };
 
