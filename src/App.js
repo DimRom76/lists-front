@@ -40,10 +40,15 @@ const RegistrationView = lazy(() =>
   ),
 );
 
+const VerifyView = lazy(() =>
+  import('./views/VerifyView.js' /* webpackChunkName: "registration-page" */),
+);
+
 function App() {
   const errorLogin = useSelector(authSelectors.getError);
   const isAuthLoading = useSelector(authSelectors.getLoading);
   const errorItem = useSelector(itemsSelectors.getError);
+  const isVeryfication = useSelector(authSelectors.getIsVerification);
 
   const dispatch = useDispatch();
 
@@ -58,6 +63,10 @@ function App() {
   useEffect(() => {
     errorItem && toast.warn(`Ошибка! ${errorItem}`);
   }, [errorItem]);
+
+  useEffect(() => {
+    isVeryfication && toast.warn(`Письмо отправлено, пройдите верификацию`);
+  }, [isVeryfication]);
 
   return (
     <Container maxWidth="md">
@@ -87,6 +96,7 @@ function App() {
             component={ItemsView}
             redirectTo={routes.login}
           />
+          <PublicRoute path={routes.verify} component={VerifyView} />
           <Route render={() => <h1>Page not found</h1>} />
         </Switch>
       </Suspense>

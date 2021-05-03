@@ -5,7 +5,7 @@ import userAction from './auth-actions';
 const initialUserState = { name: null, email: null };
 const setUser = (_, { payload }) => payload.user;
 const user = createReducer(initialUserState, {
-  [userAction.registrationUserSuccess]: setUser,
+  //[userAction.registrationUserSuccess]: setUser,
   [userAction.loginUserSuccess]: setUser,
   [userAction.logoutUserSuccess]: () => initialUserState,
   [userAction.getCurrentUserSuccess]: setUser,
@@ -14,7 +14,7 @@ const user = createReducer(initialUserState, {
 const initialToken = null;
 const setToken = (_, { payload }) => payload.token;
 const token = createReducer(initialToken, {
-  [userAction.registrationUserSuccess]: setToken,
+  //[userAction.registrationUserSuccess]: setToken,
   [userAction.loginUserSuccess]: setToken,
   [userAction.logoutUserSuccess]: () => initialToken,
 });
@@ -54,7 +54,7 @@ const error = createReducer(null, {
 });
 
 const isAuthenticated = createReducer(false, {
-  [userAction.registrationUserSuccess]: setTrue,
+  [userAction.registrationUserSuccess]: setFalse,
   [userAction.loginUserSuccess]: setTrue,
   [userAction.logoutUserSuccess]: setFalse,
   [userAction.getCurrentUserSuccess]: setTrue,
@@ -63,12 +63,17 @@ const isAuthenticated = createReducer(false, {
   [userAction.getCurrentUserError]: setFalse,
 });
 
+const isVerification = createReducer(false, {
+  [userAction.registrationUserSuccess]: setTrue,
+});
+
 const userReducer = combineReducers({
   user,
   isAuthenticated,
   token,
   loading,
   error,
+  isVerification,
 });
 
 export default userReducer;

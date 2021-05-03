@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authActions from './auth-actions';
 
-axios.defaults.baseURL = 'http://localhost:3030/api';
+//axios.defaults.baseURL = 'http://localhost:3030/api';
+axios.defaults.baseURL = 'https://hidden-island-60593.herokuapp.com/api';
 
 const token = {
   set(token) {
@@ -18,7 +19,7 @@ const registrationUser = credentials => async dispatch => {
   try {
     const response = await axios.post('/users/signup', credentials);
 
-    token.set(response.data.token);
+    //token.set(response.data.token);
     dispatch(authActions.registrationUserSuccess(response.data));
   } catch (error) {
     dispatch(authActions.registrationUserError(error.message));
@@ -34,7 +35,7 @@ const loginUser = credentials => async dispatch => {
     token.set(response.data.token);
     dispatch(authActions.loginUserSuccess(response.data));
   } catch (error) {
-    dispatch(authActions.loginUserError(error.message));
+    dispatch(authActions.loginUserError(error.response.data.message));
   }
 };
 
@@ -71,5 +72,10 @@ const getCurrentUser = () => async (dispatch, getState) => {
   }
 };
 
-const operations = { loginUser, registrationUser, logoutUser, getCurrentUser };
+const operations = {
+  loginUser,
+  registrationUser,
+  logoutUser,
+  getCurrentUser,
+};
 export default operations;

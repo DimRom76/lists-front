@@ -62,7 +62,15 @@ const deleteItem = itemId => async dispatch => {
     await axios.delete(`/items/${itemId}`);
     dispatch(deleteItemsSuccess(itemId));
   } catch (error) {
-    dispatch(deleteItemError(error.message));
+    let message = '';
+    if (error.response) {
+      message = error.response.data.message;
+    } else if (error.request) {
+      message = error.request.data.message;
+    } else {
+      message = error.message;
+    }
+    dispatch(deleteItemError(message));
   }
 };
 

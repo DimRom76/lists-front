@@ -27,14 +27,14 @@ function AddItemForm({ onSave, editList }) {
   const items = useSelector(itemsSelectors.getAllItems);
 
   useEffect(() => {
-    if (items.length === 0) {
-      const fetchItems = () => dispatch(itemsOperation.fetchItems());
-      fetchItems();
-    }
+    const fetchItems = () => dispatch(itemsOperation.fetchItems());
+    fetchItems();
+  }, [dispatch]);
 
+  useEffect(() => {
     const itemOptions = items.map(el => createOption(el.name, el._id));
     setOptions(itemOptions);
-  }, [dispatch, items]);
+  }, [items]);
 
   const onAddItemList = (idList, idItem) =>
     dispatch(listsOperation.addItemList({ idList, idItem }));

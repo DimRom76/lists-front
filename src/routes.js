@@ -4,6 +4,7 @@ const routes = {
   login: '/login',
   lists: '/lists',
   items: '/items',
+  verify: '/users/verify/:token',
 };
 
 export default routes;
