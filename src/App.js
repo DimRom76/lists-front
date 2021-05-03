@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { authOperations, authSelectors } from './redux/auth/';
+import { itemsSelectors } from './redux/items';
 
 import PrivateRoute from './Components/PrivateRoute';
 import PublicRoute from './Components/PublicRoute';
@@ -42,6 +43,7 @@ const RegistrationView = lazy(() =>
 function App() {
   const errorLogin = useSelector(authSelectors.getError);
   const isAuthLoading = useSelector(authSelectors.getLoading);
+  const errorItem = useSelector(itemsSelectors.getError);
 
   const dispatch = useDispatch();
 
@@ -52,6 +54,10 @@ function App() {
   useEffect(() => {
     errorLogin && toast.warn(`Ошибка! ${errorLogin}`);
   }, [errorLogin]);
+
+  useEffect(() => {
+    errorItem && toast.warn(`Ошибка! ${errorItem}`);
+  }, [errorItem]);
 
   return (
     <Container maxWidth="md">

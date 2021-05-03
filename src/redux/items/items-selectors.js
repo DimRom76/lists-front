@@ -6,6 +6,8 @@ export const getFilter = state => state.items.filter;
 
 export const getLoading = state => state.items.loading;
 
+export const getError = state => state.items.error;
+
 export const getVisibleItems = createSelector(
   [getAllItems, getFilter],
   (allItems, filter) => {
@@ -22,6 +24,7 @@ const operationSelectors = {
   getAllItems,
   getFilter,
   getLoading,
+  getError,
   getVisibleItems,
 };
 

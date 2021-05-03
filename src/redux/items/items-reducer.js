@@ -44,7 +44,21 @@ const loading = createReducer(false, {
   [deleteItemError]: () => false,
 });
 
-const error = createReducer(null, {});
+const setError = (_, { payload }) => payload;
+const error = createReducer(null, {
+  [fetchItemsRequest]: () => '',
+  [fetchItemsSuccess]: () => '',
+  [fetchItemsError]: setError,
+  [addItemRequest]: () => '',
+  [addItemsSuccess]: () => '',
+  [addItemError]: setError,
+  [editItemRequest]: () => '',
+  [editItemsSuccess]: () => '',
+  [editItemError]: setError,
+  [deleteItemRequest]: () => '',
+  [deleteItemsSuccess]: () => '',
+  [deleteItemError]: setError,
+});
 
 const itemsReducer = combineReducers({
   items,

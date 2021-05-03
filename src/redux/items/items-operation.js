@@ -22,7 +22,7 @@ const fetchItems = () => dispatch => {
   axios
     .get('/items')
     .then(({ data }) => dispatch(fetchItemsSuccess(data.data)))
-    .catch(error => dispatch(fetchItemsError(error)));
+    .catch(error => dispatch(fetchItemsError(error.message)));
 };
 
 const addItem = (values, idList = null) => dispatch => {
@@ -42,7 +42,7 @@ const addItem = (values, idList = null) => dispatch => {
         dispatch(listsOperation.addItemList({ idList, idItem }));
       }
     })
-    .catch(error => dispatch(addItemError(error)));
+    .catch(error => dispatch(addItemError(error.message)));
 };
 
 const editItem = values => dispatch => {
@@ -53,15 +53,17 @@ const editItem = values => dispatch => {
   axios
     .patch(`/items/${id}`, values)
     .then(({ data }) => dispatch(editItemsSuccess(data.item)))
-    .catch(error => dispatch(editItemError(error)));
+    .catch(error => dispatch(editItemError(error.message)));
 };
 
-const deleteItem = itemId => dispatch => {
+const deleteItem = itemId => async dispatch => {
   dispatch(deleteItemRequest());
-  axios
-    .delete(`/items/${itemId}`)
-    .then(() => dispatch(deleteItemsSuccess(itemId)))
-    .catch(error => dispatch(deleteItemError(error)));
+  try {
+    await axios.delete(`/items/${itemId}`);
+    dispatch(deleteItemsSuccess(itemId));
+  } catch (error) {
+    dispatch(deleteItemError(error.message));
+  }
 };
 
 const operationItems = {
