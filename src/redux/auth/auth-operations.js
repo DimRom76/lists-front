@@ -1,9 +1,6 @@
 import axios from 'axios';
 import authActions from './auth-actions';
 
-//axios.defaults.baseURL = 'http://localhost:3030/api';
-axios.defaults.baseURL = 'https://hidden-island-60593.herokuapp.com/api';
-
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
