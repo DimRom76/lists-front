@@ -15,21 +15,39 @@ function Lists({ onEditList, onAddItem }) {
   const dispatch = useDispatch();
 
   const onDeleteList = id => dispatch(listsOperation.deleteList(id));
+  const onCheckList = id => dispatch(listsOperation.checkList(id));
+
   const onDeleteItemList = (idList, idItem) =>
     dispatch(listsOperation.deleteItemList({ idList, idItem }));
 
+  const onCheckItem = (idList, idItem) =>
+    dispatch(listsOperation.checkItemList({ idList, idItem }));
+
   return (
     <ul className={s.older}>
-      {lists.map(({ _id, name, number, items }) => {
+      {lists.map(({ _id, name, number, items, isCompleted }) => {
+        const classList = `${s.list_title} ${isCompleted ? s.text_cross : ''}`;
+
         return (
           <li key={_id} className={s.liList}>
-            <div className="list_container">
-              <p>{name}</p>
+            <div>
+              <p className={classList} onClick={() => onCheckList(_id)}>
+                {name}
+              </p>
               <ul>
                 {items.map(el => {
+                  const classText = `${s.item_text} ${
+                    el.isCompletedItem ? s.text_cross : ''
+                  }`;
+
                   return (
                     <li key={el.item._id}>
-                      <p className={s.item_text}>{el.item.name}</p>
+                      <p
+                        className={classText}
+                        onClick={() => onCheckItem(_id, el.item._id)}
+                      >
+                        {el.item.name}
+                      </p>
                       <button
                         className={s.button_list}
                         onClick={() => onDeleteItemList(_id, el.item._id)}

@@ -9,12 +9,18 @@ import {
   editListRequest,
   editListsSuccess,
   editListError,
+  checkListRequest,
+  checkListsSuccess,
+  checkListError,
   deleteListRequest,
   deleteListsSuccess,
   deleteListError,
   addItemListRequest,
   addItemListsSuccess,
   addItemListError,
+  checkItemListRequest,
+  checkItemListsSuccess,
+  checkItemListError,
   deleteItemListRequest,
   deleteItemListsSuccess,
   deleteItemListError,
@@ -35,6 +41,15 @@ const addList = values => dispatch => {
     .post('/lists', values)
     .then(({ data }) => dispatch(addListsSuccess(data.list)))
     .catch(error => dispatch(addListError(error)));
+};
+
+const checkList = id => dispatch => {
+  dispatch(checkListRequest());
+
+  axios
+    .patch(`/lists/${id}/check`)
+    .then(({ data }) => dispatch(checkListsSuccess(data.list)))
+    .catch(error => dispatch(checkListError(error)));
 };
 
 const editList = values => dispatch => {
@@ -69,13 +84,23 @@ const deleteItemList = ({ idList, idItem }) => dispatch => {
     .catch(error => dispatch(deleteItemListError(error)));
 };
 
+const checkItemList = ({ idList, idItem }) => dispatch => {
+  dispatch(checkItemListRequest());
+  const body = {
+    item: idItem,
+  };
+
+  axios
+    .patch(`/lists/${idList}/checkItem`, body)
+    .then(data => dispatch(checkItemListsSuccess(data.data.list)))
+    .catch(error => dispatch(checkItemListError(error)));
+};
+
 const addItemList = ({ idList, idItem }) => dispatch => {
   dispatch(addItemListRequest());
   const body = {
     item: idItem,
   };
-  console.log(idList);
-  console.log(body);
 
   axios
     .patch(`/lists/${idList}/addItem`, body)
@@ -87,9 +112,11 @@ const operationLists = {
   fetchLists,
   addList,
   deleteList,
+  checkList,
+  editList,
   deleteItemList,
   addItemList,
-  editList,
+  checkItemList,
 };
 
 export default operationLists;

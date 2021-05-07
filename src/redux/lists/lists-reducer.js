@@ -10,12 +10,18 @@ import {
   editListRequest,
   editListsSuccess,
   editListError,
+  checkListRequest,
+  checkListsSuccess,
+  checkListError,
   deleteListRequest,
   deleteListsSuccess,
   deleteListError,
   addItemListRequest,
   addItemListsSuccess,
   addItemListError,
+  checkItemListRequest,
+  checkItemListsSuccess,
+  checkItemListError,
   deleteItemListRequest,
   deleteItemListsSuccess,
   deleteItemListError,
@@ -29,9 +35,13 @@ const lists = createReducer([], {
     state.filter(list => list._id !== payload),
   [addItemListsSuccess]: (state, { payload }) =>
     state.map(list => (list._id === payload._id ? payload : list)),
+  [checkItemListsSuccess]: (state, { payload }) =>
+    state.map(list => (list._id === payload._id ? payload : list)),
   [deleteItemListsSuccess]: (state, { payload }) =>
     state.map(list => (list._id === payload._id ? payload : list)),
   [editListsSuccess]: (state, { payload }) =>
+    state.map(list => (list._id === payload._id ? payload : list)),
+  [checkListsSuccess]: (state, { payload }) =>
     state.map(list => (list._id === payload._id ? payload : list)),
 });
 
@@ -49,12 +59,18 @@ const loading = createReducer(false, {
   [editListRequest]: () => true,
   [editListsSuccess]: () => false,
   [editListError]: () => false,
+  [checkListRequest]: () => true,
+  [checkListsSuccess]: () => false,
+  [checkListError]: () => false,
   [deleteListRequest]: () => true,
   [deleteListsSuccess]: () => false,
   [deleteListError]: () => false,
   [addItemListRequest]: () => true,
   [addItemListsSuccess]: () => false,
   [addItemListError]: () => false,
+  [checkItemListRequest]: () => true,
+  [checkItemListsSuccess]: () => false,
+  [checkItemListError]: () => false,
   [deleteItemListRequest]: () => true,
   [deleteItemListsSuccess]: () => false,
   [deleteItemListError]: () => false,

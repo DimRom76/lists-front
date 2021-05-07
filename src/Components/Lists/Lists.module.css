@@ -59,7 +59,16 @@
   transform: scale(1.1);
 }
 
+.list_title {
+  cursor: pointer;
+}
+
 .item_text {
   display: inline-block;
   margin: 2px;
+  cursor: pointer;
+}
+
+.text_cross {
+  text-decoration: line-through;
 }

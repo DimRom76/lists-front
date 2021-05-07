@@ -10,8 +10,8 @@ import store from './redux/store';
 
 import axios from 'axios';
 
-//axios.defaults.baseURL = 'http://localhost:3030/api';
-axios.defaults.baseURL = 'https://hidden-island-60593.herokuapp.com/api';
+axios.defaults.baseURL = 'http://localhost:3030/api';
+//axios.defaults.baseURL = 'https://hidden-island-60593.herokuapp.com/api';
 
 ReactDOM.render(
   <React.StrictMode>
